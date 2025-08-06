@@ -1,4 +1,4 @@
-tes <?php include 'includes/header.php'; ?>
+nama aku keizory <?php include 'includes/header.php'; ?>
 
 <section class="hero">
     <div class="hero-text">
