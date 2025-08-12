@@ -38,8 +38,15 @@
             </li>
         </ul>
 
-        <a href="formulir.php" class="btn-daftar">Daftar Siswa Baru</a>
-    </div>
+        <div class="dropdown">
+          <button class="dropbtn">Daftar Sekarang</button>
+          <div class="dropdown-content">
+            <a href="pengajuan_akun.php">Pengajuan Akun</a>
+            <a href="aktivasi_akun.php">Aktivasi Akun</a>
+            <a href="login_siswa.php">Login</a>
+          </div>
+        </div>
+      </div>
 </header>
 
 

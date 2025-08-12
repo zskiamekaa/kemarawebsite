@@ -2,7 +2,7 @@
 $host = "localhost";        
 $user = "root";             
 $password = "";             
-$database = "db_kemara"; 
+$database = "spmb"; 
 
 
 $conn = mysqli_connect($host, $user, $password, $database);
