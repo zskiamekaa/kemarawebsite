@@ -832,3 +832,193 @@ body {
 .datasiswa-table td:nth-child(2) {
   text-align: left;
 }
+
+/* =========================
+   Admin layout (sidebar + header + dashboard)
+   Paste ini ke assets/css/style.css (timpa yang lama)
+   ========================= */
+
+:root{
+  --sidebar-width: 250px;
+  --header-height: 64px; /* sesuaikan kalau header lo beda */
+  --primary: #184769;
+  --sidebar-bg: #113a58;
+  --page-bg: #f4f6fb;
+  --card-bg: #ffffff;
+  --muted: #6b6b7a;
+  --radius: 12px;
+  --shadow: 0 6px 20px rgba(20,20,50,0.06);
+}
+
+/* reset dasar */
+*{ box-sizing: border-box; }
+html,body{ margin:0; height:100%; font-family: Inter, system-ui, Arial, sans-serif; background:var(--page-bg); color:#222; -webkit-font-smoothing:antialiased; }
+
+/* ===== SIDEBAR ===== */
+.admin-sidebar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;                 /* full height */
+  width: var(--sidebar-width);
+  background: linear-gradient(180deg, var(--sidebar-bg), #0f364f);
+  color: #fff;
+  padding: 18px 12px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  z-index: 200;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.08);
+}
+
+/* brand */
+.admin-sidebar .brand{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding-bottom:6px;
+}
+.admin-sidebar .brand-logo-img{
+  width:64px; height:64px; border-radius:50%; object-fit:cover;
+  background:#fff; padding:6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.admin-sidebar .brand-name{ color:#fff; font-weight:700; font-size:16px; }
+
+/* menu */
+.admin-sidebar .menu{ margin-top:12px; display:flex; flex-direction:column; gap:6px; }
+.admin-sidebar .menu-item{
+  display:flex; align-items:center; gap:12px;
+  padding:10px 12px; color:#fff; text-decoration:none; border-radius:8px;
+  transition: all .12s;
+}
+.admin-sidebar .menu-item .icon{ width:28px; text-align:center; font-size:18px; opacity:0.95; }
+.admin-sidebar .menu-item:hover{ background: rgba(255,255,255,0.04); transform: translateX(2px); }
+.admin-sidebar .menu-item.active{ background: rgba(255,255,255,0.06); border-left:4px solid rgba(255,255,255,0.12); padding-left:8px; }
+
+/* bottom */
+.admin-sidebar .sidebar-bottom{ margin-top:auto; padding-top:12px; border-top: 1px solid rgba(255,255,255,0.04); }
+.admin-sidebar .bottom-item{ display:flex; align-items:center; gap:10px; padding:8px 12px; color:#fff; text-decoration:none; border-radius:8px; }
+
+/* ===== HEADER =====
+   header fixed to the right of sidebar (so page top remains full-width visually)
+*/
+header{
+  position: fixed;
+  top: 0;
+  left: calc(var(--sidebar-width));
+  right: 0;
+  height: var(--header-height);
+  display:flex; align-items:center; gap:12px; padding:0 20px;
+  background: var(--primary);
+  color: white;
+  z-index: 180;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+/* header content (if you have logo/title) */
+.header-title{ font-size:18px; font-weight:700; color:#fff; }
+
+/* ===== MAIN / CONTENT =====
+   content pushed right by sidebar and down by header
+*/
+.content-with-sidebar,
+.dashboard-container{
+  margin-left: var(--sidebar-width);   /* leave space for sidebar */
+  margin-top: var(--header-height);    /* leave space for header */
+  padding: 26px;
+  min-height: calc(100vh - var(--header-height));
+}
+
+/* ===== PAGE TITLE ===== */
+.page-title{
+  margin: 0 0 18px;
+  font-size:24px;
+  font-weight:700;
+  color: #24323a;
+}
+
+/* ===== STATUS CARDS ===== */
+.status-cards{
+  display:flex; gap:18px; flex-wrap:wrap; margin-bottom:22px;
+}
+.status-card{
+  flex:1 1 200px; min-width:180px;
+  background:var(--card-bg); color:#222; border-radius:10px; padding:16px;
+  box-shadow: var(--shadow); display:flex; flex-direction:column; justify-content:center;
+}
+.status-card .sc-title{ color:var(--muted); font-size:13px; margin-bottom:8px; }
+.status-card .sc-value{ font-size:24px; font-weight:700; color:var(--primary); }
+
+/* ===== TABLE ===== */
+.table-section{ margin-top:6px; }
+.table-header h2{ margin:0 0 10px; color:var(--primary); font-size:18px; }
+
+.table-wrap{
+  background: var(--card-bg); border-radius:10px; box-shadow:var(--shadow); overflow:auto;
+  padding:8px;
+}
+.data-table{
+  width:100%; border-collapse:collapse; min-width:1200px; font-size:14px;
+}
+.data-table thead th{
+  position: sticky; top:0; background:var(--primary); color:#fff; padding:12px; text-align:left; z-index:2;
+}
+.data-table td{ padding:12px; border-bottom:1px solid #eef2f6; vertical-align:middle; color:#333; }
+
+/* zebra + hover */
+.data-table tbody tr:nth-child(even){ background:#fbfdff; }
+.data-table tbody tr:hover{ background:#f6faff; }
+
+/* actions buttons */
+.actions {
+  display: flex;
+  gap: 10px; /* jarak antar tombol */
+  flex-wrap: wrap; /* kalau sempit biar turun */
+}
+
+.actions .btn {
+  padding: 8px 14px; /* lebih besar */
+  border-radius: 6px;
+  font-size: 14px; /* sedikit lebih besar */
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px; /* biar ga terlalu kecil */
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.actions .btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn.edit {
+  background: #2d9cdb;
+}
+
+.btn.copy {
+  background: #27ae60;
+}
+
+.btn.del {
+  background: #e74c3c;
+}
+
+
+/* small screens */
+@media (max-width: 1000px){
+  :root{ --sidebar-width:220px; --header-height:56px; }
+  .data-table{ min-width:900px; font-size:13px; }
+  .content-with-sidebar{ padding:18px; }
+}
+@media (max-width:720px){
+  .admin-sidebar{ display:none; } /* hide sidebar on very small screens */
+  header{ left:0; }
+  .content-with-sidebar{ margin-left:0; margin-top:56px; padding:12px; }
+  .data-table{ min-width:700px; }
+}
+
