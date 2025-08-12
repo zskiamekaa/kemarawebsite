@@ -32,7 +32,7 @@
             <li class="dropdown">
                 <a href="#">Pendaftaran</a>
                 <ul class="dropdown-content">
-                    <li><a href="pendaftaran.php#syarat">Syarat</a></li>
+                    <li><a href="pendaftaran.php#datasiswa">Lihat Data Siswa</a></li>
                     <li><a href="pendaftaran.php#formulir">Formulir</a></li>
                 </ul>
             </li>

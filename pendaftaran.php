@@ -11,17 +11,18 @@
 
 <?php include 'includes/header.php'; ?>
 
-<section class="pendaftaran-hero" style="background-image: url('assets/img/pendaftaran.png');">
+<section class="pendaftaran-hero" style="background-image: url('assets/img/rplware.jpg');">
   <div class="pendaftaran-overlay">
     <div class="pendaftaran-content">
       <h1>Shaping Tomorrow’s Leaders, 
 Starting with Your First Step Today</h1>
       <p>Mewujudkan Generasi Siap Teknologi</p>
-      <a href="#programs" class="cta-button">View our programs →</a>
+      <a href="#datasiswa" class="cta-button">View More →</a>
     </div>
   </div>
 </section>
 
+<section id="datasiswa">
 <section class="datasiswa-section">
   <div class="datasiswa-container">
     <h2>Statistik Berdasarkan Umur dan Nilai Siswa<br>T.A. 2026/2027</h2>
@@ -38,13 +39,13 @@ Starting with Your First Step Today</h1>
         <tbody>
           <?php
           // Koneksi ke database
-          $conn = mysqli_connect("localhost", "root", "", "db_kemara"); // Ganti dengan DB Anda
+          $conn = mysqli_connect("localhost", "root", "", "db_kemara");
 
           if (!$conn) {
               die("Koneksi gagal: " . mysqli_connect_error());
           }
 
-          // Query dengan perhitungan umur & nilai rata-rata langsung di SQL, lalu urutkan
+          // Ambil data nama, tanggal lahir, dan nilai dari tabel data_siswa dan nilai_siswa
           $sql = "
             SELECT 
               ds.nama_lengkap, 
@@ -56,6 +57,7 @@ Starting with Your First Step Today</h1>
               ) / 6, 2) AS nilai_rata2
             FROM data_siswa ds
             JOIN nilai_siswa ns ON ds.NISN = ns.NISN
+            WHERE ns.semester = 1
             ORDER BY umur DESC, nilai_rata2 DESC
           ";
 
@@ -66,15 +68,11 @@ Starting with Your First Step Today</h1>
 
           $no = 1;
           while ($row = mysqli_fetch_assoc($result)) {
-              $nama = $row['nama_lengkap'];
-              $umur = $row['umur'];
-              $nilai_rata2 = $row['nilai_rata2'];
-
               echo "<tr>
-                      <td>$no</td>
-                      <td>$nama</td>
-                      <td>{$umur} tahun</td>
-                      <td>{$nilai_rata2}</td>
+                      <td>{$no}</td>
+                      <td>{$row['nama_lengkap']}</td>
+                      <td>{$row['umur']} tahun</td>
+                      <td>{$row['nilai_rata2']}</td>
                     </tr>";
               $no++;
           }
@@ -86,6 +84,25 @@ Starting with Your First Step Today</h1>
     </div>
   </div>
 </section>
+</section>
+
+
+<section class="pendaftaranabout">
+    <div class="pendaftaranabout-container">
+      <div class="pendaftaranabout-img">
+        <img src="assets/img/nailong.jpg" alt="Siswa Baru">
+      </div>
+      <div class="pendaftaranabout-text">
+        <h2>Mulai Hari Ini, Bangun<br>Masa Depan yang Hebat!</h2>
+        <p>
+          Pendidikan bukan hanya tentang hari ini—ini tentang masa depan. 
+          Daftarkan anak Anda di Kemara Schools dan jadilah bagian dari generasi inovator berikutnya.
+        </p>
+        <a href="formulir.php" class="btn-daftar">Daftar Siswa Baru</a>
+      </div>
+    </div>
+  </section>
 
 </body>
+<?php include 'includes/footer.php'; ?>
 </html>
