@@ -1,65 +1,124 @@
 <?php
-
 if (!isset($active)) $active = 'dashboard';
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    
-     <link rel="stylesheet" href="assets/css/style.css">
+    <title>Sidebar Admin</title>
 </head>
-<body>
-
-
+<body style="margin:0; font-family: Arial, sans-serif;">
 
 <!-- SIDEBAR -->
-<aside class="admin-sidebar" role="navigation" aria-label="Sidebar Admin">
-    <div class="brand">
-        <img src="assets/img/kemara.png" alt="Logo Admin" class="brand-logo-img">
-        <div class="brand-name">Admin</div>
+<aside role="navigation" aria-label="Sidebar Admin" style="
+    width: 240px;
+    height: 100vh;
+    background-color: #2c3e50;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+">
+    <!-- Brand -->
+    <div>
+        <div style="padding: 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <img src="assets/img/kemara.png" alt="Logo Admin" style="width: 60px; height: 60px; border-radius: 50%;">
+            <div style="margin-top: 10px; font-weight: bold;">Admin</div>
+        </div>
+
+        <!-- Menu -->
+        <nav aria-label="Main menu" style="display: flex; flex-direction: column;">
+            <a href="dashboard_admin.php" style="
+                padding: 12px 20px;
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                background-color: <?= $active === 'dashboard' ? '#34495e' : 'transparent' ?>;
+            ">
+                <span style="margin-right: 10px;">🏠</span>
+                Dashboard
+            </a>
+
+            <a href="management_akun.php" style="
+                padding: 12px 20px;
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                background-color: <?= $active === 'manajemen' ? '#34495e' : 'transparent' ?>;
+            ">
+                <span style="margin-right: 10px;">👥</span>
+                Manajemen Pendaftar
+            </a>
+
+            <a href="verifikasi.php" style="
+                padding: 12px 20px;
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                background-color: <?= $active === 'verifikasi' ? '#34495e' : 'transparent' ?>;
+            ">
+                <span style="margin-right: 10px;">📝</span>
+                Verifikasi Data
+            </a>
+
+            <a href="statistik.php" style="
+                padding: 12px 20px;
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                background-color: <?= $active === 'statistik' ? '#34495e' : 'transparent' ?>;
+            ">
+                <span style="margin-right: 10px;">📊</span>
+                Statistik Pendaftaran
+            </a>
+
+            <a href="pengaturan.php" style="
+                padding: 12px 20px;
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+                background-color: <?= $active === 'pengaturan' ? '#34495e' : 'transparent' ?>;
+            ">
+                <span style="margin-right: 10px;">⚙️</span>
+                Pengaturan Admin
+            </a>
+        </nav>
     </div>
 
-    <nav class="menu" aria-label="Main menu">
-        <a href="dashboard_admin.php" class="menu-item <?= $active === 'dashboard' ? 'active' : '' ?>">
-            <span class="icon" aria-hidden="true">🏠</span>
-            <span class="label">Dashboard</span>
+    <!-- Bottom Menu -->
+    <div>
+        <a href="help.php" style="
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        ">
+            <span style="margin-right: 10px;">❓</span>
+            Help
         </a>
-
-        <a href="management_akun.php" class="menu-item <?= $active === 'manajemen' ? 'active' : '' ?>">
-            <span class="icon" aria-hidden="true">👥</span>
-            <span class="label">Manajemen Pendaftar</span>
-        </a>
-
-        <a href="verifikasi.php" class="menu-item <?= $active === 'verifikasi' ? 'active' : '' ?>">
-            <span class="icon" aria-hidden="true">📝</span>
-            <span class="label">Verifikasi Data</span>
-        </a>
-
-        <a href="statistik.php" class="menu-item <?= $active === 'statistik' ? 'active' : '' ?>">
-            <span class="icon" aria-hidden="true">📊</span>
-            <span class="label">Statistik Pendaftaran</span>
-        </a>
-
-        <a href="pengaturan.php" class="menu-item <?= $active === 'pengaturan' ? 'active' : '' ?>">
-            <span class="icon" aria-hidden="true">⚙️</span>
-            <span class="label">Pengaturan Admin</span>
-        </a>
-    </nav>
-
-    <div class="sidebar-bottom">
-        <a href="help.php" class="bottom-item">
-            <span class="icon" aria-hidden="true">❓</span>
-            <span class="label">Help</span>
-        </a>
-        <a href="logout.php" class="bottom-item">
-            <span class="icon" aria-hidden="true">🔒</span>
-            <span class="label">Logout</span>
+        <a href="logout.php" style="
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        ">
+            <span style="margin-right: 10px;">🔒</span>
+            Logout
         </a>
     </div>
 </aside>
-
-
 
 </body>
 </html>
