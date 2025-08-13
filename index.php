@@ -4,10 +4,10 @@
     <div class="hero-text">
         <h1>Build your IT future,<br>With us</h1>
         <p>Belajar, berkembang, dan berprestasi di dunia teknologi bersama Kemara Schools.</p>
-        <a href="#" class="btn-daftar">Daftar Siswa Baru</a>
+        <a href="#program" class="btn-daftar">View More</a>
     </div>
     <div class="hero-img">
-        <img src="assets/img/siswa.png" alt="Siswa dan Siswi">
+        <img src="assets/img/fotomurid.png" alt="Siswa dan Siswi">
     </div>
 </section>
 
@@ -51,24 +51,26 @@
         </div>
 
         
-<section class="program">
+<section id="program">
     <div class="container">
         <h2 class="judul-program">Program Unggulan</h2>
         <div class="program-wrapper">
             <div class="program-box">
-                <img src="assets/img/adiwiyata.jpg" alt="Adiwiyata">
-                <h3>Adiwiyata Sekolah</h3>
-                <p>Program pelestarian lingkungan hidup yang membentuk kebiasaan ramah lingkungan di sekolah. Mulai dari kebun sekolah, bank sampah, hingga gerakan zero waste siswa.</p>
+    <img src="assets/img/ldkpd.png" alt="Hari Nasional">
+    <h3>LDKPD</h3>
+    <p>LDKPD adalah kegiatan pelatihan dasar kepemimpinan dan pengembangan diri yang dirancang untuk membentuk karakter, meningkatkan kedisiplinan, serta menumbuhkan jiwa kepemimpinan siswa di lingkungan sekolah.</p>
+</div>
+            <div class="program-box">
+                <img src="assets/img/biclassica.png" alt="Literasi">
+                <h3>BI Classica</h3>
+                <p>BI Classica adalah platform digital classmeeting yang modern dan interaktif, menjadi wadah siswa untuk menyalurkan bakat, menjalin kebersamaan, dan berkompetisi secara sehat melalui kegiatan seru dan edukatif.
+
+</p>
             </div>
             <div class="program-box">
-                <img src="assets/img/literasi numerasi.jpg" alt="Literasi">
-                <h3>Literasi & Numerasi</h3>
-                <p>Kegiatan rutin untuk meningkatkan minat baca, menulis, dan kemampuan berpikir kritis siswa melalui pojok baca, jurnal siswa, dan lomba-lomba literasi.</p>
-            </div>
-            <div class="program-box">
-                <img src="assets/img/leadership.jpg" alt="Leadership Camp">
-                <h3>Leadership Camp</h3>
-                <p>Pelatihan kepribadian, kepemimpinan, dan soft skill melalui kegiatan seperti kemah, LDKS, workshop public speaking, hingga kunjungan industri.</p>
+                <img src="assets/img/paskibra.png" alt="Leadership Camp">
+                <h3>Paskibra</h3>
+                <p>Paskibra adalah organisasi siswa yang bertugas mengibarkan bendera merah putih dalam upacara. Melalui latihan disiplin dan kekompakan, Paskibra membentuk karakter tangguh, bertanggung jawab, dan cinta tanah air.</p>
             </div>
         </div>
     </div>

@@ -1,13 +1,12 @@
 <?php
-$host = "localhost";        
-$user = "root";             
-$password = "";             
-$database = "db_kemara"; 
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "db_kemara"; // Ganti dengan nama database kamu
 
+$koneksi = mysqli_connect($host, $user, $pass, $db);
 
-$conn = mysqli_connect($host, $user, $password, $database);
-
-if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+if (!$koneksi) {
+    die("Koneksi database gagal: " . mysqli_connect_error());
 }
 ?>

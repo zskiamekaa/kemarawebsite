@@ -11,7 +11,7 @@
 
 <?php include 'includes/header.php'; ?>
 
-<section class="profile-hero" style="background-image: url('assets/img/openprofile.jpg');">
+<section class="profile-hero" style="background-image: url('assets/img/paskibraprofile.jpg');">
   <div class="profile-overlay">
     <div class="profile-content">
       <h1>Empowering Future<br>Innovators from Today</h1>
@@ -25,7 +25,7 @@
 <section id="tentang" class="about-section">
   <div class="about-container">
     <div class="about-image">
-      <img src="assets/img/profileabout.png" alt="Kemara School" />
+      <img src="assets/img/aboutprofile.png" alt="Kemara School" />
     </div>
     <div class="about-content">
       <p class="about-subtitle">🌐 Mewujudkan Generasi Siap Teknologi</p>
@@ -50,7 +50,7 @@
 
 <section id="visimisi" class="mission-vision-section">
   <div class="container">
-    <h2 class="section-title">Our Mission<br>& Vision</h2>
+    <h2 class="section-title">Our Mission & Vission</h2>
 
     <div class="image-wrapper">
       <img src="assets/img/visimisi.png" alt="Visi dan Misi Kemara School" class="visi-misi-image">
@@ -105,36 +105,24 @@
     <h2 class="section-title">Fasilitas</h2>
     <div class="fasilitas-grid">
       <div class="fasilitas-item">
-        <img src="assets/img/labcom.jpg" alt="Lab Komputer" />
-        <p>Laboratorium Komputer Modern</p>
+        <img src="assets/img/studiosiar.png" alt="Lab Komputer" />
+        <p>Studio Siar Modern</p>
       </div>
       <div class="fasilitas-item">
-        <img src="assets/img/perpustakaan.jpg" alt="Perpustakaan" />
+        <img src="assets/img/perpustakaan.png" alt="Perpustakaan" />
         <p>Perpustakaan Digital</p>
       </div>
       <div class="fasilitas-item">
-        <img src="assets/img/kelas.jpg" alt="Kelas Smart" />
-        <p>Kelas Pintar Berbasis Teknologi</p>
+        <img src="assets/img/gedungB.png" alt="Gedung B" />
+        <p>Gedung B</p>
       </div>
       <div class="fasilitas-item">
-        <img src="assets/img/auditorium.jpg" alt="Aula Serbaguna" />
+        <img src="assets/img/aula.png" alt="Aula Serbaguna" />
         <p>Aula Serbaguna</p>
       </div>
       <div class="fasilitas-item">
-        <img src="assets/img/parking.jpg" alt="Parkir Luas" />
-        <p>Area Parkir Luas</p>
-      </div>
-      <div class="fasilitas-item">
-        <img src="assets/img/canteen.jpg" alt="Kantin Sehat" />
-        <p>Kantin Sehat & Bersih</p>
-      </div>
-      <div class="fasilitas-item">
-        <img src="assets/img/sport.jpg" alt="Sport Area" />
-        <p>Sport Area</p>
-      </div>
-      <div class="fasilitas-item">
-        <img src="assets/img/lobby.jpg" alt="Lobby" />
-        <p>Lobby Area</p>
+        <img src="assets/img/atmcenter.png" alt="Atm Center" />
+        <p>ATM Center</p>
       </div>
     </div>
   </div>
