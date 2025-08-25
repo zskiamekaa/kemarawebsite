@@ -15,7 +15,7 @@ function generateNoPeserta($conn) {
         $angka = str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
         $no_peserta = "KMRSCH-" . $angka;
 
-        // Pastikan belum ada di database
+        
         $cek = mysqli_query($conn, "SELECT * FROM Akun_Siswa WHERE no_peserta = '$no_peserta'");
     } while (mysqli_num_rows($cek) > 0);
 
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email   = mysqli_real_escape_string($conn, $_POST['email']);
     $no_telp = mysqli_real_escape_string($conn, $_POST['no_telp']);
 
-    // Cek apakah NISN sudah punya akun
+    
     $cek = mysqli_query($conn, "SELECT * FROM Akun_Siswa WHERE NISN = '$nisn'");
     if (mysqli_num_rows($cek) > 0) {
         echo "<h3>Akun untuk NISN ini sudah pernah diajukan.</h3>";
@@ -35,16 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Generate nomor peserta unik
     $no_peserta = generateNoPeserta($conn);
 
-    // Simpan ke tabel Akun_Siswa
+
     $query = "INSERT INTO Akun_Siswa (NISN, email, no_telp, no_peserta, status_akun)
               VALUES ('$nisn', '$email', '$no_telp', '$no_peserta', 'Menunggu Verifikasi')";
 
     if (mysqli_query($conn, $query)) {
-        session_destroy(); // Hapus session setelah selesai
-        header("Location: dashboard_siswa.php");
+        session_destroy(); 
+        header("Location: dashboardsiswa.php");
         exit();
     } else {
         echo "Gagal menyimpan data: " . mysqli_error($conn);

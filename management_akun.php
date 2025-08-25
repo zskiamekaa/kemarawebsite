@@ -2,39 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="utf-8">
-    <title>Dashboard Admin - Data Siswa</title>
-    <style>
-        /* RESET */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f6fa; color: #333; display: flex; }
-        .sidebar { width: 250px; height: 100vh; background-color: #184769; color: white; display: flex; flex-direction: column; justify-content: space-between; position: fixed; left: 0; top: 0; padding: 20px; }
-        .sidebar a { color: white; text-decoration: none; margin-bottom: 20px; display: block; padding: 10px; border-radius: 8px; transition: background 0.3s; }
-        .sidebar a:hover { background-color: #133656; }
-        .container { margin-left: 250px; padding: 30px; flex: 1; min-height: 100vh; }
-        .filter-form { padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-        .filter-form input, .filter-form select { padding: 12px 16px; font-size: 15px; border: 1px solid #ccc; border-radius: 8px; width: 240px; transition: border 0.3s; }
-        .filter-form button, .reset-btn { padding: 12px 20px; font-size: 15px; border: none; border-radius: 8px; cursor: pointer; }
-        .filter-form button { background-color: #184769; color: white; }
-        .filter-form button:hover { background-color: #133656; }
-        .reset-btn { background-color: #6c757d; color: white; text-decoration: none; }
-        .reset-btn:hover { background-color: #5a6268; }
-        .table-container { background-color: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        table thead { background-color: #184769; color: white; }
-        table th, table td { padding: 12px 16px; border-bottom: 1px solid #ddd; }
-        table tbody tr:hover { background-color: #f1f1f1; }
-        .btn { padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; }
-        .btn-edit { background-color: #007bff; color: white; }
-        .btn-edit:hover { background-color: #0069d9; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; }
-        .badge.waiting { background-color: #ffc107; color: black; }
-        .badge.accepted { background-color: #28a745; color: white; }
-        .badge.rejected { background-color: #dc3545; color: white; }
-        .alasan-box { display: none; margin-top: 6px; }
-        .alasan-box textarea { width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #ccc; resize: vertical; font-size: 13px; }
-    </style>
+    <title>Dashboard Admin - Manajemen Pendaftar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-[#E8E0D5] font-sans">
 
 <?php
 $active = 'pendaftar'; 
@@ -54,65 +25,76 @@ if ($status_filter != '') {
 $result = mysqli_query($conn, $sql);
 ?>
 
-<div class="container">
-    <h2>Manajemen Pendaftar</h2>
+<div class="ml-64 p-6">
+    <h2 class="text-2xl font-bold text-[#184769] mb-6">Manajemen Pendaftar</h2>
 
-    <form method="GET" class="filter-form mb-3">
-        <input type="text" name="keyword" placeholder="Cari Nama, No Peserta, NISN, Email" value="<?= htmlspecialchars($keyword) ?>">
-        <select name="status">
+   
+    <form method="GET" class="flex flex-col md:flex-row gap-3 mb-6">
+        <input type="text" name="keyword" placeholder="Cari Nama, No Peserta, NISN, Email" 
+               value="<?= htmlspecialchars($keyword) ?>"
+               class="px-3 py-2 border rounded-md text-sm w-full md:w-auto focus:ring focus:ring-blue-300 outline-none">
+
+        <select name="status" class="px-3 py-2 border rounded-md text-sm w-full md:w-auto focus:ring focus:ring-blue-300 outline-none">
             <option value="">Semua Status</option>
             <option value="Menunggu Verifikasi" <?= $status_filter == 'Menunggu Verifikasi' ? 'selected' : '' ?>>Menunggu Verifikasi</option>
             <option value="Disetujui" <?= $status_filter == 'Disetujui' ? 'selected' : '' ?>>Disetujui</option>
             <option value="Ditolak" <?= $status_filter == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
         </select>
-        <button type="submit">Filter</button>
-        <a href="manajemen_pendaftar.php" class="reset-btn">Reset</a>
+
+        <button type="submit" class="bg-[#F77E21] hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm">Filter</button>
     </form>
 
-    <div class="table-container">
-        <table>
-            <thead>
+   
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
+        <table class="w-full table-fixed text-sm">
+            <thead class="bg-[#184769] text-white">
                 <tr>
-                    <th>No</th>
-                    <th>No Peserta</th>
-                    <th>NISN</th>
-                    <th>Email</th>
-                    <th>No Telp</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                    <th>Alasan</th>
+                    <th class="px-3 py-2 text-left w-6">No</th>
+                    <th class="px-3 py-2 text-left w-24">No Peserta</th>
+                    <th class="px-3 py-2 text-left w-24">NISN</th>
+                    <th class="px-3 py-2 text-left w-48">Email</th>
+                    <th class="px-3 py-2 text-left w-32">No Telp</th>
+                    <th class="px-3 py-2 text-left w-32">Status</th>
+                    <th class="px-3 py-2 text-left w-36">Aksi</th>
+                    <th class="px-3 py-2 text-left">Alasan</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $no = 1; while ($row = mysqli_fetch_assoc($result)) : ?>
-                    <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= $row['no_peserta'] ?></td>
-                        <td><?= $row['NISN'] ?></td>
-                        <td><?= $row['email'] ?></td>
-                        <td><?= $row['no_telp'] ?></td>
-                        <td>
+                    <tr class="border-b hover:bg-gray-50">
+                        <td class="px-3 py-1"><?= $no++ ?></td>
+                        <td class="px-3 py-1"><?= $row['no_peserta'] ?></td>
+                        <td class="px-3 py-1"><?= $row['NISN'] ?></td>
+                        <td class="px-3 py-1 truncate" title="<?= $row['email'] ?>"><?= $row['email'] ?></td>
+                        <td class="px-3 py-1"><?= $row['no_telp'] ?></td>
+                        <td class="px-3 py-1">
                             <?php
-                            if ($row['status_akun'] == 'Menunggu Verifikasi') echo '<span class="badge waiting">🟡 Menunggu Verifikasi</span>';
-                            elseif ($row['status_akun'] == 'Disetujui') echo '<span class="badge accepted">🟢 Disetujui</span>';
-                            elseif ($row['status_akun'] == 'Ditolak') echo '<span class="badge rejected">🔴 Ditolak</span>';
+                            $status = $row['status_akun'];
+                            if ($status == 'Menunggu Verifikasi') {
+                                echo '<span class="bg-yellow-100 text-yellow-700 font-semibold px-2 py-1 rounded-md inline-block">🟡 '.$status.'</span>';
+                            } elseif ($status == 'Disetujui') {
+                                echo '<span class="bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-md inline-block">🟢 '.$status.'</span>';
+                            } elseif ($status == 'Ditolak') {
+                                echo '<span class="bg-red-100 text-red-700 font-semibold px-2 py-1 rounded-md inline-block">🔴 '.$status.'</span>';
+                            }
                             ?>
                         </td>
-                        <td>
-                            <form method="POST" action="ubah_status.php" style="display:flex; flex-direction:column; gap:4px;" onsubmit="return validateForm(this)">
+                        <td class="px-3 py-1">
+                            <form method="POST" action="ubah_status.php" class="flex flex-col gap-1" onsubmit="return validateForm(this)">
                                 <input type="hidden" name="no_peserta" value="<?= $row['no_peserta'] ?>">
-                                <select name="status" class="status-select">
+                                <select name="status" class="px-2 py-1 border rounded-md text-xs w-full">
                                     <option value="Menunggu Verifikasi" <?= $row['status_akun'] == 'Menunggu Verifikasi' ? 'selected' : '' ?>>Menunggu</option>
                                     <option value="Disetujui" <?= $row['status_akun'] == 'Disetujui' ? 'selected' : '' ?>>Disetujui</option>
                                     <option value="Ditolak" <?= $row['status_akun'] == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
                                 </select>
-                                <div class="alasan-box">
-                                    <textarea name="alasan" placeholder="Isi alasan penolakan..."><?= htmlspecialchars($row['alasan']) ?></textarea>
+                                <div class="alasan-box hidden mt-1">
+                                    <textarea name="alasan" placeholder="Isi alasan penolakan..." 
+                                              class="w-full px-2 py-1 border rounded-md text-xs min-h-[60px]"><?= htmlspecialchars($row['alasan']) ?></textarea>
                                 </div>
-                                <button type="submit" class="btn btn-edit">Update</button>
+                                <button type="submit" class="bg-[#F77E21] hover:bg-orange-600 text-white px-3 py-1 rounded-md text-xs font-medium w-full">Update</button>
                             </form>
                         </td>
-                        <td><?= htmlspecialchars($row['alasan']) ?></td>
+                        <td class="px-3 py-1 truncate" title="<?= $row['alasan'] ?>"><?= htmlspecialchars($row['alasan']) ?></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -122,8 +104,8 @@ $result = mysqli_query($conn, $sql);
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.status-select').forEach(function (select) {
-        toggleAlasan(select);
+    document.querySelectorAll('select[name="status"]').forEach(function (select) {
+        toggleAlasan(select); 
         select.addEventListener('change', function () {
             toggleAlasan(select);
         });
@@ -131,23 +113,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function toggleAlasan(select) {
         const alasanBox = select.closest('form').querySelector('.alasan-box');
+        const textarea = alasanBox.querySelector('textarea');
+
         if (select.value === 'Ditolak') {
-            alasanBox.style.display = 'block';
-            alasanBox.querySelector('textarea').required = true;
+            alasanBox.classList.remove('hidden');
+            alasanBox.classList.add('block'); 
+            textarea.required = true;
         } else {
-            alasanBox.style.display = 'none';
-            alasanBox.querySelector('textarea').required = false;
-            alasanBox.querySelector('textarea').value = '';
+            alasanBox.classList.add('hidden');
+            textarea.required = false;
         }
     }
 });
 
-// Validasi sebelum submit
 function validateForm(form) {
-    const status = form.querySelector('.status-select').value;
-    const alasan = form.querySelector('textarea').value.trim();
+    const status = form.querySelector('select[name="status"]').value;
+    const alasan = form.querySelector('textarea')?.value.trim();
     if (status === 'Ditolak' && alasan === '') {
-        alert('Mohon isi alasan penolakan!');
+        alert('Mohon isi alasan penolakan sebelum Update!');
         return false;
     }
     return true;

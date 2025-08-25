@@ -3,143 +3,10 @@
 <head>
     <meta charset="utf-8">
     <title>Dashboard Admin - Data Siswa</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f9;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            padding: 20px;
-            margin-left: 260px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        /* Statistik Box */
-        .stats-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .stat-box {
-            flex: 1;
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
-
-        .stat-icon {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .stat-label {
-            font-size: 14px;
-            color: #666;
-        }
-
-        /* Warna per box */
-        .stats-container .stat-box:nth-child(1) .stat-icon { color: #28a745; }
-        .stats-container .stat-box:nth-child(2) .stat-icon { color: #dc3545; }
-        .stats-container .stat-box:nth-child(3) .stat-icon { color: #ffc107; }
-
-        /* Filter form */
-        .filter-form {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .filter-form input,
-        .filter-form select {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
-        }
-
-        .filter-form button {
-            background-color: #007bff;
-            border: none;
-            padding: 8px 14px;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .filter-form button:hover {
-            background-color: #0056b3;
-        }
-
-        .reset-btn {
-            background-color: #6c757d;
-            color: white;
-            padding: 8px 14px;
-            border-radius: 6px;
-            text-decoration: none;
-        }
-
-        /* Table */
-        .table-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        table th, table td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        table th {
-            background-color: #184769;
-            color: white;
-        }
-
-        /* Badge */
-        .badge {
-            padding: 5px 8px;
-            border-radius: 6px;
-            font-weight: bold;
-            display: inline-block;
-        }
-
-        .badge.waiting { background-color: #fff3cd; color: #856404; }
-        .badge.accepted { background-color: #d4edda; color: #155724; }
-        .badge.rejected { background-color: #f8d7da; color: #721c24; }
-
-        @media (max-width: 768px) {
-            .container { margin-left: 0; }
-            .stats-container { flex-direction: column; }
-            .filter-form { flex-direction: column; align-items: stretch; }
-        }
-    </style>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-[#E8E0D5] font-sans">
 <?php
 $active = 'pendaftar'; 
 include 'includes/sidebar.php';
@@ -148,12 +15,12 @@ include 'koneksi.php';
 $keyword = $_GET['keyword'] ?? '';
 $status_filter = $_GET['status'] ?? '';
 
-// Ambil jumlah data untuk statistik
+// Statistik
 $count_disetujui = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM akun_siswa WHERE status_akun='Disetujui'"))['total'];
-$count_ditolak = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM akun_siswa WHERE status_akun='Ditolak'"))['total'];
-$count_menunggu = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM akun_siswa WHERE status_akun='Menunggu Verifikasi'"))['total'];
+$count_ditolak   = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM akun_siswa WHERE status_akun='Ditolak'"))['total'];
+$count_menunggu  = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM akun_siswa WHERE status_akun='Menunggu Verifikasi'"))['total'];
 
-// Query data tabel
+// Query tabel
 $sql = "SELECT * FROM akun_siswa WHERE 1=1";
 if ($keyword != '') {
     $sql .= " AND (no_peserta LIKE '%$keyword%' OR NISN LIKE '%$keyword%' OR email LIKE '%$keyword%')";
@@ -163,81 +30,92 @@ if ($status_filter != '') {
 }
 $result = mysqli_query($conn, $sql);
 ?>
-<div class="container">
-    <h2>Manajemen Pendaftar</h2>
+<!-- KONTEN -->
+<div class="p-6 ml-[240px]">
+    <h2 class="text-2xl font-bold text-[#184769] mb-6">Dashboard Admin</h2>
 
-    <!-- Statistik Box -->
-    <div class="stats-container">
-        <div class="stat-box">
-            <div class="stat-icon">✅</div>
-            <div class="stat-number"><?= $count_disetujui ?></div>
-            <div class="stat-label">Disetujui</div>
+    <!-- Statistik -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+            <div class="text-3xl mb-2 text-green-600">✅</div>
+            <div class="text-2xl font-bold text-[#184769]"><?= $count_disetujui ?></div>
+            <div class="text-sm text-gray-600">Disetujui</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-icon">❌</div>
-            <div class="stat-number"><?= $count_ditolak ?></div>
-            <div class="stat-label">Ditolak</div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+            <div class="text-3xl mb-2 text-red-600">❌</div>
+            <div class="text-2xl font-bold text-[#184769]"><?= $count_ditolak ?></div>
+            <div class="text-sm text-gray-600">Ditolak</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-icon">⏳</div>
-            <div class="stat-number"><?= $count_menunggu ?></div>
-            <div class="stat-label">Menunggu</div>
+        <div class="bg-white rounded-lg shadow p-4 text-center">
+            <div class="text-3xl mb-2 text-yellow-500">⏳</div>
+            <div class="text-2xl font-bold text-[#184769]"><?= $count_menunggu ?></div>
+            <div class="text-sm text-gray-600">Menunggu</div>
         </div>
     </div>
 
-    <!-- Filter Form -->
-    <form method="GET" class="filter-form">
-        <input type="text" name="keyword" placeholder="Cari No Peserta, NISN, Email" value="<?= htmlspecialchars($keyword) ?>">
-        <select name="status">
+    <!-- Filter -->
+    <form method="GET" class="flex flex-col md:flex-row gap-3 mb-6">
+        <input type="text" 
+               name="keyword" 
+               placeholder="Cari No Peserta, NISN, Email" 
+               value="<?= htmlspecialchars($keyword) ?>" 
+               class="px-3 py-2 border rounded-md text-sm w-full md:w-auto">
+        <select name="status" class="px-3 py-2 border rounded-md text-sm w-full md:w-auto">
             <option value="">Semua Status</option>
             <option value="Menunggu Verifikasi" <?= $status_filter == 'Menunggu Verifikasi' ? 'selected' : '' ?>>Menunggu Verifikasi</option>
             <option value="Disetujui" <?= $status_filter == 'Disetujui' ? 'selected' : '' ?>>Disetujui</option>
             <option value="Ditolak" <?= $status_filter == 'Ditolak' ? 'selected' : '' ?>>Ditolak</option>
         </select>
-        <button type="submit">Filter</button>
-        <a href="manajemen_pendaftar.php" class="reset-btn">Reset</a>
+        <button type="submit" class="bg-[#F77E21] text-white px-4 py-2 rounded-md text-sm hover:bg-orange-600">
+            Filter
+        </button>
+        <a href="manajemen_pendaftar.php" class="bg-[#F77E21] text-white px-4 py-2 rounded-md text-sm text-center hover:bg-orange-600">
+            Reset
+        </a>
     </form>
 
-    <!-- Tabel Data -->
-    <div class="table-container">
-        <table>
+    <!-- Tabel -->
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
+        <table class="w-full text-sm">
             <thead>
-                <tr>
-                    <th>No</th>
-                    <th>No Peserta</th>
-                    <th>NISN</th>
-                    <th>Email</th>
-                    <th>No Telp</th>
-                    <th>Status</th>
-                    <th>Alasan</th>
+                <tr class="bg-[#184769] text-white">
+                    <th class="px-4 py-2 text-left">No</th>
+                    <th class="px-4 py-2 text-left">No Peserta</th>
+                    <th class="px-4 py-2 text-left">NISN</th>
+                    <th class="px-4 py-2 text-left">Email</th>
+                    <th class="px-4 py-2 text-left">No Telp</th>
+                    <th class="px-4 py-2 text-left">Status</th>
+                    <th class="px-4 py-2 text-left">Alasan</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if (mysqli_num_rows($result) > 0): ?>
                     <?php $no = 1; while ($row = mysqli_fetch_assoc($result)) : ?>
-                        <tr>
-                            <td><?= $no++ ?></td>
-                            <td><?= $row['no_peserta'] ?></td>
-                            <td><?= $row['NISN'] ?></td>
-                            <td><?= $row['email'] ?></td>
-                            <td><?= $row['no_telp'] ?></td>
-                            <td>
+                        <tr class="border-b">
+                            <td class="px-4 py-2"><?= $no++ ?></td>
+                            <td class="px-4 py-2"><?= $row['no_peserta'] ?></td>
+                            <td class="px-4 py-2"><?= $row['NISN'] ?></td>
+                            <td class="px-4 py-2"><?= $row['email'] ?></td>
+                            <td class="px-4 py-2"><?= $row['no_telp'] ?></td>
+                            <td class="px-4 py-2">
                                 <?php
                                 $status = $row['status_akun'];
                                 if ($status == 'Menunggu Verifikasi') {
-                                    echo '<span class="badge waiting">🟡 '.$status.'</span>';
+                                    echo '<span class="bg-yellow-100 text-yellow-700 font-semibold px-2 py-1 rounded-md inline-block">🟡 '.$status.'</span>';
                                 } elseif ($status == 'Disetujui') {
-                                    echo '<span class="badge accepted">🟢 '.$status.'</span>';
+                                    echo '<span class="bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-md inline-block">🟢 '.$status.'</span>';
                                 } elseif ($status == 'Ditolak') {
-                                    echo '<span class="badge rejected">🔴 '.$status.'</span>';
+                                    echo '<span class="bg-red-100 text-red-700 font-semibold px-2 py-1 rounded-md inline-block">🔴 '.$status.'</span>';
                                 }
                                 ?>
                             </td>
-                            <td><?= $row['alasan'] ?></td>
+                            <td class="px-4 py-2"><?= $row['alasan'] ?></td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
-                    <tr><td colspan="7" style="text-align:center;">Tidak ada data ditemukan</td></tr>
+                    <tr>
+                        <td colspan="7" class="text-center px-4 py-4 text-gray-500">Tidak ada data ditemukan</td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>

@@ -1,31 +1,107 @@
+<?php
+session_start();
+include 'koneksi.php'; // koneksi ke database
+
+$error = "";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, $_POST['password']);
+
+    // cek data user di tabel akun_siswa
+    $query = "SELECT * FROM akun_siswa WHERE email='$email' LIMIT 1";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        // verifikasi password
+        if (password_verify($password, $row['password'])) {
+            // cek status akun
+            if ($row['status_akun'] === "Disetujui") {
+                $_SESSION['no_peserta'] = $row['no_peserta'];
+                $_SESSION['email'] = $row['email'];
+
+                header("Location: dashboardsiswa.php");
+                exit;
+            } elseif ($row['status_akun'] === "Menunggu Verifikasi") {
+                $error = "⚠️ Akun masih menunggu verifikasi.";
+            } else {
+                $error = "❌ Akun ditolak, hubungi admin.";
+            }
+        } else {
+            $error = "❌ Password salah!";
+        }
+    } else {
+        $error = "❌ Email tidak ditemukan!";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Siswa</title>
-</head>
-<body style="font-family: Arial, sans-serif; background-color: #E8E0D5; margin: 0; padding: 0;">
-
-  <div style="width: 100%; max-width: 400px; margin: 80px auto; background-color: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-    <h2 style="text-align: center; color: #333;">Login Siswa</h2>
-    
-    <?php
-    session_start();
-    if (isset($_SESSION['error'])) {
-        echo '<p style="color: red; text-align: center; margin-bottom: 15px;">' . $_SESSION['error'] . '</p>';
-        unset($_SESSION['error']);
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #E8E0D5;
+      color: #184769;
     }
-    ?>
+    .panel-kiri {
+      background-color: #DBBAA7;
+    }
+    .btn-utama {
+      background-color: #DF7924;
+    }
+    .btn-utama:hover {
+      background-color: #c4661e;
+    }
+    .teks-utama {
+      color: #184769;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
 
-    <form action="proses_loginsiswa.php" method="POST">
-      <input type="email" name="email" placeholder="Email" required style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
-      <input type="password" name="password" placeholder="Kata Sandi" required style="width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
-      <button type="submit" name="login" style="width: 100%; background-color: #715C41; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer;">Masuk</button>
-    </form>
+  <div class="w-full max-w-5xl flex bg-white rounded-2xl shadow-lg overflow-hidden">
     
-    <p style="text-align: center; margin-top: 15px;">Belum punya akun? <a href="register_siswa.php">Daftar di sini</a></p>
-  </div>
+    <!-- Bagian Kiri (gambar ilustrasi) -->
+    <div class="hidden md:flex w-1/2 panel-kiri items-center justify-center p-10">
+      <img src="assets/img/students.svg" alt="Ilustrasi" class="w-80">
+    </div>
 
+    <!-- Bagian Kanan (form login) -->
+    <div class="w-full md:w-1/2 p-10 flex flex-col justify-center">
+      
+      <h2 class="text-3xl font-bold text-center teks-utama mb-6">Welcome Back</h2>
+
+      <?php if ($error != ""): ?>
+        <div class="bg-red-100 text-red-600 px-4 py-2 rounded mb-4 text-center">
+          <?= $error ?>
+        </div>
+      <?php endif; ?>
+
+      <form method="POST" action="" class="space-y-4">
+
+        <div>
+          <input type="email" name="email" placeholder="Email"
+            class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#DF7924]" required>
+        </div>
+
+        <div>
+          <input type="password" name="password" placeholder="Password"
+            class="w-full px-4 py-3 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#DF7924]" required>
+        </div>
+
+
+        <button type="submit"
+          class="w-full py-3 btn-utama text-white font-semibold rounded-lg shadow transition">
+          Log In
+        </button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>

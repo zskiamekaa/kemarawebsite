@@ -1,81 +1,98 @@
 <?php
 session_start();
+require 'koneksi.php';
 
-// Redirect kalau belum login
+// Pastikan user sudah login
 if (!isset($_SESSION['email'])) {
     header("Location: loginsiswa.php");
     exit();
 }
 
-$nama = $_SESSION['nama_lengkap'];
+$email = $_SESSION['email'];
+
+// Ambil data siswa berdasarkan email login
+$sql = "SELECT ds.nama_lengkap, ds.NISN, ak.no_peserta, ak.email, ak.status_akun, ak.alasan
+        FROM akun_siswa ak
+        JOIN data_siswa ds ON ak.NISN = ds.NISN
+        WHERE ak.email = ?";
+
+$stmt = $conn->prepare($sql);
+if (!$stmt) {
+    die("Prepare failed: " . $conn->error);
+}
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$siswa = $result->fetch_assoc();
+
+if (!$siswa) {
+    die("Data siswa tidak ditemukan!");
+}
+
+// Variabel untuk tampilan
+$nama          = $siswa['nama_lengkap'];
+$username      = explode('@', $siswa['email'])[0]; 
+$status_daftar = $siswa['status_akun'];
+$status_bayar  = "Menunggu Konfirmasi"; 
+$tanggal_daftar = date("d F Y"); 
+$last_login    = $_SESSION['last_login'] ?? "Belum pernah login";
+
+$stmt->close();
 ?>
-
-<h1>Selamat datang, <?php echo htmlspecialchars($nama); ?>!</h1>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Siswa</title>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="sidebar-container">
-    <h2 class="sidebar-title">Smart</h2>
-    <ul class="sidebar-menu">
-      <li class="menu-item">Dashboard</li>
-      <li class="menu-item">Lessons</li>
-      <li class="menu-item">Schedule</li>
-      <li class="menu-item">Materials</li>
-      <li class="menu-item">Forum</li>
-      <li class="menu-item">Assessments</li>
-      <li class="menu-item">Settings</li>
-    </ul>
-    <button class="logout-button">Log Out</button>
+
+  <div class="topbar">
+  <!-- Logo kiri -->
+  <div class="logo">
+    <img src="assets/img/logo_kemara.png" alt="Logo SMP Bina Informatika">
   </div>
 
-  <div class="content-area">
-    <div class="header-bar">
-      <input type="text" class="search-input" placeholder="Search..." />
+  <!-- Menu kanan -->
+  <div class="nav-links">
+    <a href="logout.php">Logout</a>
+  </div>
+</div>
+
+
+  <div class="container">
+    <div class="welcome">
+      <h2>Selamat Datang, <?= htmlspecialchars($nama) ?>!</h2>
+      <p>Dashboard Siswa Kemara School</p>
     </div>
+  </div>
 
-    <div class="greeting-section">
-      <h3 class="greeting-title">Hello <?= htmlspecialchars($nama) ?>!</h3>
-      <p class="greeting-text">You have 3 new tasks. Let's get started!</p>
-      <a href="#" class="greeting-link">Review it!</a>
+  <div class="container">
+    <div class="grid">
+      <div class="info-card">NAMA LENGKAP <br><strong><?= htmlspecialchars($nama) ?></strong></div>
+      <div class="info-card">USERNAME <br><strong><?= htmlspecialchars($username) ?></strong></div>
+      <div class="info-card">STATUS PENDAFTARAN <br>
+        <span class="badge-status bg-green"><?= htmlspecialchars($status_daftar) ?></span>
+      </div>
+      <div class="info-card">STATUS PEMBAYARAN <br>
+        <span class="badge-status bg-yellow"><?= htmlspecialchars($status_bayar) ?></span>
+      </div>
+      <div class="info-card">TANGGAL PENDAFTARAN <br><strong><?= $tanggal_daftar ?></strong></div>
+      <div class="info-card">TERAKHIR LOGIN <br><strong><?= $last_login ?></strong></div>
     </div>
+  </div>
 
-    <div class="dashboard-cards">
-      <div class="dashboard-card card-performance">
-        <h4 class="card-title">Performance</h4>
-        <p class="card-text">Best lessons: 95.4</p>
-        <div class="bar-chart">
-          <div class="bar-column" style="height: 85%"></div>
-          <div class="bar-column" style="height: 64%"></div>
-          <div class="bar-column" style="height: 72%"></div>
-          <div class="bar-column" style="height: 68%"></div>
-        </div>
-      </div>
-
-      <div class="dashboard-card card-schedule">
-        <h4 class="card-title">Today's Schedule</h4>
-        <ul class="schedule-list">
-          <li class="schedule-item">08:45 - 10:30 Electronics</li>
-          <li class="schedule-item">11:00 - 12:00 Robotics</li>
-          <li class="schedule-item">13:00 - 14:30 C++</li>
-        </ul>
-      </div>
-
-      <div class="dashboard-card card-events">
-        <h4 class="card-title">Upcoming Events</h4>
-        <ul class="event-list">
-          <li class="event-item">Robot Fest - Dec 4, 2025</li>
-          <li class="event-item">Webinar - Dec 21, 2025</li>
-        </ul>
+  <div class="container">
+    <div class="info-card">
+      <h5><strong>ℹ️ Informasi Penting</strong></h5>
+      <div class="alert">
+        <strong>Bukti pembayaran telah diupload.</strong><br>
+        Tim admin akan memverifikasi bukti pembayaran Anda dalam waktu 1-3 hari kerja. Status akan diperbarui setelah verifikasi selesai.
       </div>
     </div>
   </div>
+ 
 </body>
 </html>

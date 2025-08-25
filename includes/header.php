@@ -43,7 +43,7 @@
           <div class="dropdown-content">
             <a href="pengajuan_akun.php">Pengajuan Akun</a>
             <a href="aktivasi_akun.php">Aktivasi Akun</a>
-            <a href="login_siswa.php">Login</a>
+            <a href="loginsiswa.php">Login</a>
           </div>
         </div>
       </div>
