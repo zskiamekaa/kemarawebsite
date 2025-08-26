@@ -7,13 +7,15 @@ if (!isset($active)) $active = 'dashboard';
     <meta charset="UTF-8">
     <title>Sidebar Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* RESET */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif; /* ganti font jadi Poppins */
         }
 
         body {
@@ -41,44 +43,42 @@ if (!isset($active)) $active = 'dashboard';
 
         /* Brand */
         .brand {
-            padding: 25px 20px;
+            padding: 20px;
             text-align: center;
             border-bottom: 1px solid rgba(255,255,255,0.15);
         }
 
         .brand img {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: block;
             margin: 0 auto;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
         }
 
         .brand img:hover {
-            transform: scale(1.15);
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+            border-color: #DF7924;
         }
 
         .brand-name {
             margin-top: 12px;
-            font-weight: bold;
-            font-size: 16px;
-            letter-spacing: 1px;
+            font-weight: 600;
+            font-size: 17px;
+            letter-spacing: 0.5px;
             text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         /* Menu */
-        .brand {
-    padding: 15px 20px; /* dikurangi agar menu lebih dekat */
-}
-
-nav {
-    display: flex;
-    flex-direction: column;
-    margin-top: 0; /* benar-benar menempel */
-}
-
+        nav {
+            display: flex;
+            flex-direction: column;
+            margin-top: 0;
+        }
 
         nav a {
             padding: 14px 25px;
@@ -87,6 +87,7 @@ nav {
             display: flex;
             align-items: center;
             font-size: 15px;
+            font-weight: 500;
             border-radius: 0 25px 25px 0;
             margin: 4px 0;
             position: relative;
@@ -95,7 +96,7 @@ nav {
 
         nav a span {
             margin-right: 15px;
-            font-size: 17px;
+            font-size: 18px;
         }
 
         nav a::before {
@@ -123,7 +124,7 @@ nav {
         nav a.active {
             background-color: #DF7924;
             color: white;
-            font-weight: bold;
+            font-weight: 600;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }
 
@@ -141,6 +142,7 @@ nav {
             display: flex;
             align-items: center;
             font-size: 14px;
+            font-weight: 500;
             border-radius: 0 25px 25px 0;
             margin: 2px 0;
             border-top: 1px solid rgba(255,255,255,0.15);
@@ -168,46 +170,6 @@ nav {
 
         .bottom-menu a:hover::before {
             width: 100%;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            aside {
-                width: 200px;
-            }
-
-            nav a {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .brand img {
-                width: 70px;
-                height: 70px;
-            }
-
-            .brand-name {
-                font-size: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            aside {
-                width: 60px;
-            }
-
-            nav a {
-                justify-content: center;
-                padding: 10px 0;
-            }
-
-            nav a span {
-                margin-right: 0;
-            }
-
-            .brand-name {
-                display: none;
-            }
         }
     </style>
 </head>
