@@ -33,9 +33,7 @@ if (!$siswa) {
 $nama          = $siswa['nama_lengkap'];
 $username      = explode('@', $siswa['email'])[0]; 
 $status_daftar = $siswa['status_akun'];
-$status_bayar  = "Menunggu Konfirmasi"; 
 $tanggal_daftar = date("d F Y"); 
-$last_login    = $_SESSION['last_login'] ?? "Belum pernah login";
 
 $stmt->close();
 ?>
@@ -45,54 +43,72 @@ $stmt->close();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Siswa</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-[#E8E0D5] font-sans text-gray-800">
 
-  <div class="topbar">
-  <!-- Logo kiri -->
-  <div class="logo">
-    <img src="assets/img/logo_kemara.png" alt="Logo SMP Bina Informatika">
-  </div>
+  <!-- Topbar -->
+  <div class="flex justify-between items-center bg-[#E8E0D5] px-6 py-4 shadow-md border-b border-[#184769] sticky top-0 z-50">
+    <!-- Logo kiri -->
+    <div class="flex items-center space-x-3">
+      <img src="assets/img/logo_kemara.png" alt="Logo SMP Bina Informatika" class="h-12 w-auto object-contain">
+    </div>
 
-  <!-- Menu kanan -->
-  <div class="nav-links">
-    <a href="logout.php">Logout</a>
-  </div>
-</div>
-
-
-  <div class="container">
-    <div class="welcome">
-      <h2>Selamat Datang, <?= htmlspecialchars($nama) ?>!</h2>
-      <p>Dashboard Siswa Kemara School</p>
+    <!-- Menu kanan -->
+    <div>
+      <a href="logout.php" class="px-4 py-2 rounded-md bg-[#DF7924] text-white font-semibold hover:bg-[#c9651d] transition">
+        Logout
+      </a>
     </div>
   </div>
 
-  <div class="container">
-    <div class="grid">
-      <div class="info-card">NAMA LENGKAP <br><strong><?= htmlspecialchars($nama) ?></strong></div>
-      <div class="info-card">USERNAME <br><strong><?= htmlspecialchars($username) ?></strong></div>
-      <div class="info-card">STATUS PENDAFTARAN <br>
-        <span class="badge-status bg-green"><?= htmlspecialchars($status_daftar) ?></span>
-      </div>
-      <div class="info-card">STATUS PEMBAYARAN <br>
-        <span class="badge-status bg-yellow"><?= htmlspecialchars($status_bayar) ?></span>
-      </div>
-      <div class="info-card">TANGGAL PENDAFTARAN <br><strong><?= $tanggal_daftar ?></strong></div>
-      <div class="info-card">TERAKHIR LOGIN <br><strong><?= $last_login ?></strong></div>
+  <!-- Welcome -->
+  <div class="max-w-5xl mx-auto mt-10 px-4">
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-bold text-[#184769]">Selamat Datang, <?= htmlspecialchars($nama) ?>!</h2>
+      <p class="text-gray-700">Dashboard Siswa Kemara School</p>
     </div>
   </div>
 
-  <div class="container">
-    <div class="info-card">
-      <h5><strong>ℹ️ Informasi Penting</strong></h5>
-      <div class="alert">
-        <strong>Bukti pembayaran telah diupload.</strong><br>
-        Tim admin akan memverifikasi bukti pembayaran Anda dalam waktu 1-3 hari kerja. Status akan diperbarui setelah verifikasi selesai.
+  <!-- Info Cards -->
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="grid md:grid-cols-2 gap-6">
+      
+      <div class="bg-white shadow rounded-xl p-6 text-center">
+        <p class="text-gray-600">NAMA LENGKAP</p>
+        <h3 class="text-xl font-semibold text-[#184769] mt-1"><?= htmlspecialchars($nama) ?></h3>
+      </div>
+      
+      <div class="bg-white shadow rounded-xl p-6 text-center">
+        <p class="text-gray-600">USERNAME</p>
+        <h3 class="text-xl font-semibold text-[#184769] mt-1"><?= htmlspecialchars($username) ?></h3>
+      </div>
+      
+      <div class="bg-white shadow rounded-xl p-6 text-center">
+        <p class="text-gray-600">STATUS PENDAFTARAN</p>
+        <span class="inline-block mt-2 px-4 py-1 rounded-full text-white bg-green-500 text-sm font-bold">
+          <?= htmlspecialchars($status_daftar) ?>
+        </span>
+      </div>
+      
+      <div class="bg-white shadow rounded-xl p-6 text-center">
+        <p class="text-gray-600">TANGGAL PENDAFTARAN</p>
+        <h3 class="text-xl font-semibold text-[#184769] mt-1"><?= $tanggal_daftar ?></h3>
+      </div>
+    
+    </div>
+  </div>
+
+  <!-- Informasi Penting -->
+  <div class="max-w-5xl mx-auto mt-10 px-4">
+    <div class="bg-white shadow rounded-xl p-6">
+      <h5 class="font-semibold text-[#184769] mb-3">ℹ️ Informasi Penting</h5>
+      <div class="bg-yellow-100 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded">
+        <p><strong>Pendaftaran Anda berhasil disimpan.</strong></p>
+        <p>Silakan menunggu informasi lebih lanjut dari admin sekolah.</p>
       </div>
     </div>
   </div>
- 
+
 </body>
 </html>

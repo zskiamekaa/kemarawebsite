@@ -1341,8 +1341,6 @@ body {
 }
 
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -1356,89 +1354,3 @@ body {
   line-height: 1.5;
 }
 
-/* Topbar */
-.topbar {
-  background: #E8E0D5; 
-  padding: 12px 30px;
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  border-bottom: 2px solid #ddd;
-}
-
-/* Logo kiri */
-.topbar .logo img {
-  height: 60px;   
-  width: auto;
-  display: block;
-}
-
-/* Menu kanan */
-.topbar .nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.topbar .nav-links a {
-  color: #4B0082; /* ungu seperti di screenshot */
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s;
-}
-
-.topbar .nav-links a:hover {
-  color: #F77E21; /* hover jadi oranye */
-}
-
-
-/* Container */
-.container {
-  max-width: 1100px;
-  margin: 25px auto;
-  padding: 0 15px;
-}
-
-/* Welcome Section */
-.welcome {
-  background: #184769; /* biru tua */
-  color: white;
-  padding: 30px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-/* Grid untuk card info */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 15px;
-}
-
-.info-card {
-  background: white;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-/* Badge */
-.badge-status {
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  display: inline-block;
-  font-weight: bold;
-}
-
-.bg-green { background: #184769; color: white; } /* Approved */
-.bg-yellow { background: #F77E21; color: white; } /* Pending */
-
-/* Alert */
-.alert {
-  background: #FDEEDC; /* oranye soft */
-  color: #B3541E;
-  padding: 15px;
-  border-radius: 6px;
-  margin-top: 10px;
-  border: 1px solid #F77E21;
-}
